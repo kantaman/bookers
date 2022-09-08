@@ -7,13 +7,21 @@
   <span><%= book.title %></span>
   <span><%= book.body %></span>
   <span><%= link_to "Show", book_path(book.id) %></span>
-  <span><%= link_to "Edit", book_path(book.id) %></span>
-  <span>Destroy</span>
+  <span><%= link_to "Edit", edit_book_path(book.id) %></span>
+  <span><%= link_to "Destroy", book_path(book.id), method: :delete, "data-confirm" => "Are you sure?" %></span>
   
 <% end %>
 
 
 <h2>New book</h2>
+<% if @book.errors.any? %>
+  <h2><%= @book.errors.count %> errors prohibited this book from being saved:</h2>
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %> can't be blank</li>
+    <% end %>
+  </ul>
+<% end %>
 <!-- form_with部分 -->
 <%= form_with model: @book, url: '/books', method: :post do |f| %>
   <h4>Title</h4>
