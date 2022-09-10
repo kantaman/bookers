@@ -38,9 +38,13 @@ class BooksController < ApplicationController
   end
   
   def destroy
-    book = Book.find(params[:id])  # データ（レコード）を1件取得
-    book.destroy  # データ（レコード）を削除
-    redirect_to '/books'  # 投稿一覧画面へリダイレクト  
+    @book = Book.find(params[:id])
+    if @book.destroy
+      flash[:notice] = "Book was successfully destroyed."
+      redirect_to '/books'
+    else
+      render :index
+    end
   end
   
   
